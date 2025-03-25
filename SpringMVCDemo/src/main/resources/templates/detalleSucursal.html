@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Detalle de Sucursal</title>
+</head>
+<body>
+<h1>Detalle de Sucursal <span th:text="${sucursal.nombre}">Nombre sucursal</span></h1>
+
+<p><strong>Director:</strong> <span th:text="${sucursal.director}">Nombre director</span></p>
+<p><strong>Dirección:</strong> <span th:text="${sucursal.direccion}">Dirección postal</span></p>
+
+<br/>
+<a href="/sucursales">← Volver al listado</a>
+</body>
+</html>

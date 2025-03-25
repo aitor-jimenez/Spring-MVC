@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Listado de Sucursales</title>
+</head>
+<body>
+<h1>Listado de Sucursales</h1>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Director</th>
+        <th>Dirección</th>
+        <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="suc : ${sucursales}">
+        <td th:text="${suc.id}">1</td>
+        <td th:text="${suc.nombre}">Sucursal ABC</td>
+        <td th:text="${suc.director}">Director XYZ</td>
+        <td th:text="${suc.direccion}">Dirección</td>
+        <td>
+            <a th:href="@{'/sucursales/' + ${suc.id}}">Ver detalle</a> |
+            <a th:href="@{'/sucursales/borrar/' + ${suc.id}}">Borrar</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<!-- Formulario de creación -->
+<h2>Crear nueva sucursal</h2>
+<form th:action="@{/sucursales}" method="post">
+    <label>Nombre:</label>
+    <input type="text" name="nombre"/><br/>
+    <label>Director:</label>
+    <input type="text" name="director"/><br/>
+    <label>Dirección:</label>
+    <input type="text" name="direccion"/><br/>
+    <button type="submit">Crear</button>
+</form>
+</body>
+</html>
