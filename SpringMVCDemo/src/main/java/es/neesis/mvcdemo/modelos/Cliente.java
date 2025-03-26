@@ -1,6 +1,7 @@
 package es.neesis.mvcdemo.modelos;
 
-import org.springframework.stereotype.Component;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Cliente {
 
@@ -10,6 +11,7 @@ public class Cliente {
     private String email;
     private String telefono;
     private Sucursal sucursalPrincipal;
+    private List<Cuenta> cuentas;
 
     public Cliente(String dni, String nombre, String direccionPostal, String email, String telefono, Sucursal sucursalPrincipal) {
         this.dni = dni;
@@ -18,6 +20,7 @@ public class Cliente {
         this.email = email;
         this.telefono = telefono;
         this.sucursalPrincipal = sucursalPrincipal;
+        cuentas = new ArrayList<>();
     }
 
     public String getDni() {
@@ -48,4 +51,11 @@ public class Cliente {
         this.sucursalPrincipal = sucursal;
     }
 
+    public List<Cuenta> getCuentas() {
+        return cuentas;
+    }
+
+    public void setCuentas(List<Cuenta> cuentas) {
+        this.cuentas = cuentas;
+    }
 }
