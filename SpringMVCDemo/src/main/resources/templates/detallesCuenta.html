@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalles cuenta</title>
+</head>
+<body>
+<h1>Detalles de su cuenta</h1>
+<h2>Usuario con id <span th:text="${cuenta.userId}">id del usuario</span></h2>
+<p><span style="font-weight: 500">Número de cuenta:</span> <span th:text="${cuenta.numCuenta}">número de cuenta</span>
+</p>
+<p><span style="font-weight: 500">Balance:</span> <span th:text="${cuenta.balance}">balance de cuenta</span></p>
+
+<br/>
+<a href="/cuentas">Volver al listado de cuentas</a>
+</body>
+</html>
