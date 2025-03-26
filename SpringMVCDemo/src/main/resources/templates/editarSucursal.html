@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Sucursal</title>
+</head>
+<body>
+<h1>Editar Sucursal</h1>
+
+<form th:action="@{'/sucursales/' + ${sucursal.id}}" method="post">
+    <label>Nombre:</label>
+    <input type="text" name="nombre" th:value="${sucursal.nombre}"/><br/>
+    <label>Director:</label>
+    <input type="text" name="director" th:value="${sucursal.director}"/><br/>
+    <label>Dirección:</label>
+    <input type="text" name="direccion" th:value="${sucursal.direccion}"/><br/>
+    <button type="submit">Guardar cambios</button>
+</form>
+
+<br/>
+<a th:href="@{/sucursales}">← Cancelar y volver</a>
+</body>
+</html>

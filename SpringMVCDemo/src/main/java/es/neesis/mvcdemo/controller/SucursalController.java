@@ -29,13 +29,23 @@ public class SucursalController {
     }
 
     @GetMapping("/{id}")
-    public String obtenerSucursalPorId(@PathVariable int id, Model model) {
+    public String mostrarFormulariDetalle(@PathVariable int id, Model model) {
         Sucursal sucursal = servicioSucursal.obtenerSucursalPorId(id);
         if (sucursal == null) {
             return "redirect:/sucursales?error=notfound";
         }
         model.addAttribute("sucursal", sucursal);
         return "detalleSucursal";
+    }
+
+    @GetMapping("/editar/{id}")
+    public String mostrarFormularioEdicion(@PathVariable int id, Model model) {
+        Sucursal sucursal = servicioSucursal.obtenerSucursalPorId(id);
+        if (sucursal == null) {
+            return "redirect:/sucursales?error=notfound";
+        }
+        model.addAttribute("sucursal", sucursal);
+        return "editarSucursal";
     }
 
     @PostMapping
