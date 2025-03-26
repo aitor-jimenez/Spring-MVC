@@ -40,16 +40,24 @@ public class ClienteController {
         return "detalleCliente";
     }
 
-    @PutMapping("/{dni}")
-    public String modificarCliente(@PathVariable String dni, Cliente cliente, Model model) {
-        this.servicioCliente.modificarCliente(cliente);
-        return "/clientes";
+    @GetMapping("/editar/{dni}")
+    public String mostrarFormularioEdicion(@PathVariable String dni, Model model) {
+        model.addAttribute("cliente", this.servicioCliente.buscarCliente(dni));
+        model.addAttribute("sucursales", this.servicioSucursal.listarSucursales());
+        return "editarCliente";
     }
 
     @PostMapping("/{dni}")
-    public String borrarCliente(@RequestParam String dni, Model model) {
+    public String modificarCliente(@PathVariable String dni, Cliente cliente, Model model) {
+        cliente.setSucursalPrincipal(this.servicioSucursal.obtenerSucursalPorId(cliente.getSucursalPrincipal().getId()));
+        this.servicioCliente.modificarCliente(cliente);
+        return "redirect:/clientes";
+    }
+
+    @GetMapping("/borrar/{dni}")
+    public String borrarCliente(@PathVariable String dni) {
         this.servicioCliente.bajaCliente(dni);
-        return "/clientes";
+        return "redirect:/clientes";
     }
 
 }

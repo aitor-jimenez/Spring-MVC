@@ -14,6 +14,12 @@
 <p><strong>Sucursal principal:</strong> <span th:text="${cliente.sucursalPrincipal.nombre}">Sucursal principal</span></p>
 
 <br/>
+
+<form th:action="@{'/clientes/editar/' + ${cliente.dni}}" method="get">
+    <button type="submit">Modificar</button>
+</form>
+
+<br/>
 <a href="/clientes">← Volver al listado</a>
 </body>
 </html>

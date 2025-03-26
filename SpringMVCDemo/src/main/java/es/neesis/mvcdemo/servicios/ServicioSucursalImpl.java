@@ -12,6 +12,12 @@ public class ServicioSucursalImpl implements ServicioSucursal {
     private final List<Sucursal> sucursales = new ArrayList<>();
     private Integer contadorIds = 1;
 
+    public ServicioSucursalImpl() {
+        this.crearSucursal(new Sucursal(1, "Sucursal 1", "Director 1", "Dirección 1"));
+        this.crearSucursal(new Sucursal(2, "Sucursal 2", "Director 2", "Dirección 2"));
+        this.crearSucursal(new Sucursal(3, "Sucursal 3", "Director 3", "Dirección 3"));
+    }
+
     @Override
     public List<Sucursal> listarSucursales() {
         return sucursales;

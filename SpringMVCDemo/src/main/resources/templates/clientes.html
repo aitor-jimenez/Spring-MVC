@@ -28,8 +28,7 @@
         <td th:text="${cliente.sucursalPrincipal.nombre}">Sucursal principal</td>
         <td>
             <a th:href="@{'/clientes/' + ${cliente.dni}}">Ver detalle</a> |
-            <form th:action="@{'/clientes/' + ${cliente.dni}}" method="post">Borrar</form>
-<!--            <a th:href="@{'/clientes/borrar/' + ${clientes.dni}}">Borrar</a>-->
+            <a th:href="@{'/clientes/borrar/' + ${cliente.dni}}">Borrar</a>
         </td>
     </tr>
     </tbody>
