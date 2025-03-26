@@ -7,11 +7,11 @@ import java.util.List;
 public interface ServicioSucursal {
     List<Sucursal> listarSucursales();
 
-    Sucursal obtenerSucursalPorId(int id);
+    Sucursal obtenerSucursalPorId(Integer id);
 
     Sucursal crearSucursal(Sucursal sucursal);
 
     Sucursal modificarSucursal(Sucursal sucursal);
 
-    boolean borrarSucursal(int id);
+    boolean borrarSucursal(Integer id);
 }
