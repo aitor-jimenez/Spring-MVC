@@ -5,12 +5,13 @@
     <title>Detalle de Cliente</title>
 </head>
 <body>
-<h1>Detalle de Cliente <span th:text="${cliente.nombre}">Nombre cliente</span></h1>
 
-<p><strong>Dirección postal:</strong> <span th:text="${cliente.direccion_postal}">Dirección postal</span></p>
+<h1>Detalle de Cliente <span th:text="${cliente.dni}">DNI</span></h1>
+<p><strong>Nombre:</strong> <span th:text="${cliente.nombre}">Nombre</span></p>
+<p><strong>Dirección postal:</strong> <span th:text="${cliente.direccionPostal}">Dirección postal</span></p>
 <p><strong>Email:</strong> <span th:text="${cliente.email}">Email</span></p>
 <p><strong>Teléfono:</strong> <span th:text="${cliente.telefono}">Teléfono</span></p>
-<p><strong>Sucursal principal:</strong> <span th:text="${cliente.sucursal_principal.nombre}">Sucursal principal</span></p>
+<p><strong>Sucursal principal:</strong> <span th:text="${cliente.sucursalPrincipal.nombre}">Sucursal principal</span></p>
 
 <br/>
 <a href="/clientes">← Volver al listado</a>

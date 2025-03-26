@@ -10,7 +10,7 @@ import java.util.List;
 public class ServicioSucursalImpl implements ServicioSucursal {
 
     private final List<Sucursal> sucursales = new ArrayList<>();
-    private int contadorIds = 1;
+    private Integer contadorIds = 1;
 
     @Override
     public List<Sucursal> listarSucursales() {
@@ -18,7 +18,7 @@ public class ServicioSucursalImpl implements ServicioSucursal {
     }
 
     @Override
-    public Sucursal obtenerSucursalPorId(int id) {
+    public Sucursal obtenerSucursalPorId(Integer id) {
         return sucursales.stream().filter(s -> s.getId() == id).findFirst().orElse(null);
     }
 
@@ -43,7 +43,7 @@ public class ServicioSucursalImpl implements ServicioSucursal {
     }
 
     @Override
-    public boolean borrarSucursal(int id) {
+    public boolean borrarSucursal(Integer id) {
         return sucursales.removeIf(s -> s.getId() == id);
     }
 }

@@ -6,18 +6,18 @@ public class Cliente {
 
     private String dni;
     private String nombre;
-    private String direccion_postal;
+    private String direccionPostal;
     private String email;
     private String telefono;
-    private Sucursal sucursal_principal;
+    private Sucursal sucursalPrincipal;
 
-    public Cliente(String dni, String nombre, String direccion_postal, String email, String telefono, Sucursal sucursal_principal) {
+    public Cliente(String dni, String nombre, String direccionPostal, String email, String telefono, Sucursal sucursalPrincipal) {
         this.dni = dni;
         this.nombre = nombre;
-        this.direccion_postal = direccion_postal;
+        this.direccionPostal = direccionPostal;
         this.email = email;
         this.telefono = telefono;
-        this.sucursal_principal = sucursal_principal;
+        this.sucursalPrincipal = sucursalPrincipal;
     }
 
     public String getDni() {
@@ -28,8 +28,8 @@ public class Cliente {
         return this.nombre;
     }
 
-    public String getDireccion_postal() {
-        return this.direccion_postal;
+    public String getDireccionPostal() {
+        return this.direccionPostal;
     }
 
     public String getEmail() {
@@ -40,8 +40,12 @@ public class Cliente {
         return this.telefono;
     }
 
-    public Sucursal getSucursal_principal() {
-        return this.sucursal_principal;
+    public Sucursal getSucursalPrincipal() {
+        return this.sucursalPrincipal;
+    }
+
+    public void setSucursalPrincipal(Sucursal sucursal) {
+        this.sucursalPrincipal = sucursal;
     }
 
 }

@@ -22,10 +22,10 @@
     <tr th:each="cliente : ${clientes}">
         <td th:text="${cliente.dni}">DNI</td>
         <td th:text="${cliente.nombre}">Nombre</td>
-        <td th:text="${cliente.direccion_postal}">Dirección postal</td>
+        <td th:text="${cliente.direccionPostal}">Dirección postal</td>
         <td th:text="${cliente.email}">Email</td>
         <td th:text="${cliente.telefono}">Teléfono</td>
-        <td th:text="${cliente.sucursal_principal.nombre}">Sucursal principal</td>
+        <td th:text="${cliente.sucursalPrincipal.nombre}">Sucursal principal</td>
         <td>
             <a th:href="@{'/clientes/' + ${cliente.dni}}">Ver detalle</a> |
             <form th:action="@{'/clientes/' + ${cliente.dni}}" method="post">Borrar</form>
@@ -43,14 +43,14 @@
     <label>Nombre:</label>
     <input type="text" name="nombre"/><br/>
     <label>Dirección postal:</label>
-    <input type="text" name="direccion_postal"/><br/>
+    <input type="text" name="direccionPostal"/><br/>
     <label>Email:</label>
     <input type="text" name="email"/><br/>
     <label>Teléfono:</label>
     <input type="text" name="telefono"/><br/>
     <label>Sucursal principal:</label>
-    <select name="sucursal_principal" id="sucursal_principal">
-        <option th:each="sucursal : ${sucursales}" th:value="${sucursal}" th:text="${sucursal.nombre}"></option>
+    <select name="sucursalPrincipal.id" id="sucursalPrincipal">
+        <option th:each="sucursal : ${sucursales}" th:value="${sucursal.id}" th:text="${sucursal.nombre}"></option>
     </select>
     <button type="submit">Crear</button>
 </form>

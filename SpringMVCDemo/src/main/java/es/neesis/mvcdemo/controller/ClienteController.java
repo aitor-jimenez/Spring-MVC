@@ -28,13 +28,15 @@ public class ClienteController {
 
     @PostMapping
     public String addCliente(Cliente cliente, Model model) {
+        cliente.setSucursalPrincipal(this.servicioSucursal.obtenerSucursalPorId(cliente.getSucursalPrincipal().getId()));
         this.servicioCliente.altaCliente(cliente);
-        return "/clientes";
+        return "redirect:/clientes";
     }
 
     @GetMapping("/{dni}")
-    public String getCliente(@RequestParam String dni, Model model) {
+    public String getCliente(@PathVariable String dni, Model model) {
         model.addAttribute("cliente", this.servicioCliente.buscarCliente(dni));
+        System.out.println(this.servicioCliente.buscarCliente(dni).toString());
         return "detalleCliente";
     }
 
