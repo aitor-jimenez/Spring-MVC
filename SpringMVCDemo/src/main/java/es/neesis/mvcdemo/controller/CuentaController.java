@@ -1,12 +1,14 @@
 package es.neesis.mvcdemo.controller;
 
+import es.neesis.mvcdemo.VirtualDBContext.ClienteDBContext;
 import es.neesis.mvcdemo.dtos.OutCuentaDTO;
 import es.neesis.mvcdemo.modelos.Cuenta;
 import es.neesis.mvcdemo.servicios.ServicioCuenta;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -14,67 +16,71 @@ import java.util.List;
 public class CuentaController {
 
     private ServicioCuenta servicioCuenta;
+    private ClienteDBContext clienteDBContext;
 
-    public CuentaController(ServicioCuenta servicioCuenta) {
+    public CuentaController(ServicioCuenta servicioCuenta, ClienteDBContext clienteDBContext) {
         this.servicioCuenta = servicioCuenta;
+        this.clienteDBContext = clienteDBContext;
     }
 
     @GetMapping("/{idCliente}/all")
-    @ResponseBody
-    public ResponseEntity<List<Cuenta>> listarCuentas(@PathVariable Long clienteId) {
+    public String listarCuentas(@PathVariable Long idCliente, Model model) {
         List<Cuenta> cuentas;
         try {
-            cuentas = servicioCuenta.getTodasCuentas(clienteId);
+            cuentas = servicioCuenta.getTodasCuentas(idCliente);
         } catch (Exception e) {
-            return ResponseEntity.notFound().build();
+            cuentas = new ArrayList<>();
         }
 
-        if (cuentas.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
+        model.addAttribute("listaCuentas", cuentas);
 
-        return ResponseEntity.ok(cuentas);
+        return "cuentas";
     }
 
     @PostMapping("/{idCliente}/")
-    public ResponseEntity<Void> darAltaCuenta(@PathVariable Long idCliente, @RequestBody Cuenta cuenta) {
+    public String darAltaCuenta(@PathVariable Long idCliente, @RequestBody Cuenta cuenta, Model model) {
         try {
             servicioCuenta.darAltaCuenta(idCliente, cuenta);
         } catch (Exception e) {
-            return ResponseEntity.notFound().build();
+            model.addAttribute("errorMsg", e.getMessage());
+            return "redirect:/cuentas?error=notFound";
         }
-        return ResponseEntity.ok().build();
+        return "redirect:/cuentas" + +idCliente;
     }
 
     @PutMapping("/{idCliente}/{numCuenta}")
-    public ResponseEntity<Void> modificarCuenta(@PathVariable Long idCliente, @PathVariable String numCuenta, @RequestBody Cuenta cuenta) {
+    public String modificarCuenta(@PathVariable Long idCliente, @PathVariable String numCuenta, @RequestBody Cuenta cuenta, Model model) {
         try {
             servicioCuenta.modificarCuenta(idCliente, numCuenta, cuenta);
         } catch (Exception e) {
-            return ResponseEntity.notFound().build();
+            model.addAttribute("errorMsg", e.getMessage());
+            return "redirect:/cuentas?error=notFound";
         }
 
-        return ResponseEntity.ok().build();
+        return "redirect:/cuentas/" + idCliente;
     }
 
     @DeleteMapping("/{idCliente}/{numCuenta}")
-    public ResponseEntity<Void> eliminarCuenta(@PathVariable Long idCliente, @PathVariable String numCuenta) {
+    public String eliminarCuenta(@PathVariable Long idCliente, @PathVariable String numCuenta, Model model) {
         try {
             servicioCuenta.eliminarCuenta(idCliente, numCuenta);
         } catch (Exception e) {
-            return ResponseEntity.notFound().build();
+            model.addAttribute("errorMsg", e.getMessage());
+            return "redirect:/cuentas?error=notFound";
         }
-        return ResponseEntity.ok().build();
+        return "redirect:/cuentas/" + idCliente;
     }
 
     @GetMapping("/{idCliente}/{numCuenta}")
-    public ResponseEntity<OutCuentaDTO> obtenerDetalles(@PathVariable Long idCliente, @PathVariable String numCuenta) {
+    public String obtenerDetalles(@PathVariable Long idCliente, @PathVariable String numCuenta, Model model) {
         OutCuentaDTO cuenta;
         try {
             cuenta = servicioCuenta.getDetalles(idCliente, numCuenta);
+            model.addAttribute("detallesCuenta", cuenta);
         } catch (Exception e) {
-            return ResponseEntity.notFound().build();
+            model.addAttribute("errorMsg", e.getMessage());
+            return "redirect:/cuentas?error=notFound";
         }
-        return ResponseEntity.ok(cuenta);
+        return "detallesCuenta";
     }
 }
