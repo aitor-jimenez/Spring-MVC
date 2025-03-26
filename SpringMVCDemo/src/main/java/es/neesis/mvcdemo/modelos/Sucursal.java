@@ -1,7 +1,7 @@
 package es.neesis.mvcdemo.modelos;
 
 public class Sucursal {
-    private int id;
+    private Integer id;
     private String nombre;
     private String director;
     private String direccion;
@@ -9,18 +9,18 @@ public class Sucursal {
     public Sucursal() {
     }
 
-    public Sucursal(int id, String nombre, String director, String direccion) {
+    public Sucursal(Integer id, String nombre, String director, String direccion) {
         this.id = id;
         this.nombre = nombre;
         this.director = director;
         this.direccion = direccion;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

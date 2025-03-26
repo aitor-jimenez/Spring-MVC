@@ -11,6 +11,12 @@
 <p><strong>Dirección:</strong> <span th:text="${sucursal.direccion}">Dirección postal</span></p>
 
 <br/>
+
+<form th:action="@{'/sucursales/editar/' + ${sucursal.id}}" method="get">
+    <button type="submit">Modificar</button>
+</form>
+
+<br/>
 <a href="/sucursales">← Volver al listado</a>
 </body>
 </html>

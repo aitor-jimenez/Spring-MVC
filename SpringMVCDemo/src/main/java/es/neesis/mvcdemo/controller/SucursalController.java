@@ -4,10 +4,7 @@ import es.neesis.mvcdemo.modelos.Sucursal;
 import es.neesis.mvcdemo.servicios.ServicioSucursal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,13 +26,23 @@ public class SucursalController {
     }
 
     @GetMapping("/{id}")
-    public String obtenerSucursalPorId(@PathVariable int id, Model model) {
+    public String mostrarFormulariDetalle(@PathVariable int id, Model model) {
         Sucursal sucursal = servicioSucursal.obtenerSucursalPorId(id);
         if (sucursal == null) {
             return "redirect:/sucursales?error=notfound";
         }
         model.addAttribute("sucursal", sucursal);
         return "detalleSucursal";
+    }
+
+    @GetMapping("/editar/{id}")
+    public String mostrarFormularioEdicion(@PathVariable int id, Model model) {
+        Sucursal sucursal = servicioSucursal.obtenerSucursalPorId(id);
+        if (sucursal == null) {
+            return "redirect:/sucursales?error=notfound";
+        }
+        model.addAttribute("sucursal", sucursal);
+        return "editarSucursal";
     }
 
     @PostMapping
@@ -53,7 +60,7 @@ public class SucursalController {
         return "redirect:/sucursales/" + id;
     }
 
-    @GetMapping("/borrar/{id}")
+    @DeleteMapping("/borrar/{id}")
     public String borrarSucursal(@PathVariable int id) {
         boolean borrada = servicioSucursal.borrarSucursal(id);
         if (!borrada) {
