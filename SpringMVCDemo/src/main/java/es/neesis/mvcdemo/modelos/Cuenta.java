@@ -4,10 +4,10 @@ public class Cuenta {
 
     private String numCuenta;
     private Sucursal sucursal;
-    private Long userId;
+    private String userId;
     private Double balance;
 
-    public Cuenta(String numCuenta, Sucursal sucursal, Long userId, Double balance) {
+    public Cuenta(String numCuenta, Sucursal sucursal, String userId, Double balance) {
         this.numCuenta = numCuenta;
         this.sucursal = sucursal;
         this.userId = userId;
@@ -30,11 +30,11 @@ public class Cuenta {
         this.sucursal = sucursal;
     }
 
-    public Long getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

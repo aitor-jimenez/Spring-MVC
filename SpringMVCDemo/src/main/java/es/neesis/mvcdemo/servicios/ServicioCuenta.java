@@ -1,20 +1,21 @@
 package es.neesis.mvcdemo.servicios;
 
-import es.neesis.mvcdemo.dtos.OutCuentaDTO;
 import es.neesis.mvcdemo.modelos.Cuenta;
 
 import java.util.List;
 
 public interface ServicioCuenta {
 
-    List<Cuenta> getTodasCuentas(Long idCliente);
+    List<Cuenta> getTodasCuentas();
 
-    void darAltaCuenta(Long idCliente, Cuenta cuenta);
+    List<Cuenta> getTodasCuentasCliente(String idCliente);
 
-    void modificarCuenta(Long idCliente, String numCuenta, Cuenta cuenta);
+    void darAltaCuenta(Cuenta cuenta);
 
-    void eliminarCuenta(Long idCliente, String numCuenta);
+    void modificarCuenta(String numCuenta, Cuenta cuenta);
 
-    OutCuentaDTO getDetalles(Long idCliente, String numCuenta);
+    void eliminarCuenta(String numCuenta);
+
+    Cuenta getDetalles(String numCuenta);
 
 }

@@ -1,34 +1,43 @@
 package es.neesis.mvcdemo.servicios;
 
-import es.neesis.mvcdemo.VirtualDBContext.ClienteDBContext;
-import es.neesis.mvcdemo.dtos.OutCuentaDTO;
 import es.neesis.mvcdemo.modelos.Cliente;
 import es.neesis.mvcdemo.modelos.Cuenta;
+import es.neesis.mvcdemo.modelos.Sucursal;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 @Service
 public class ServicioCuentaImpl implements ServicioCuenta {
 
-    private ClienteDBContext clienteDBContext;
+    private ServicioCliente servicioCliente;
+    private ServicioSucursal servicioSucursal;
+    private List<Cuenta> cuentas;
     private Random rnd;
 
-    public ServicioCuentaImpl(ClienteDBContext clienteDBContext) {
-        this.clienteDBContext = clienteDBContext;
+    public ServicioCuentaImpl(ServicioCliente servicioCliente, ServicioSucursal servicioSucursal) {
+        this.servicioCliente = servicioCliente;
+        this.servicioSucursal = servicioSucursal;
+        this.cuentas = new ArrayList<>();
         rnd = new Random();
     }
 
     @Override
-    public List<Cuenta> getTodasCuentas(Long idCliente) {
-        List<Cliente> clientes = clienteDBContext.clientes;
+    public List<Cuenta> getTodasCuentas() {
+        return cuentas;
+    }
+
+    @Override
+    public List<Cuenta> getTodasCuentasCliente(String idCliente) {
+        List<Cliente> clientes = servicioCliente.listarClientes();
         if (clientes.isEmpty()) {
             throw new RuntimeException("No hay clientes en la base de datos");
         }
 
         Cliente cliente = clientes.stream()
-                .filter(clienteIt -> clienteIt.getId().equals(idCliente)).
+                .filter(clienteIt -> clienteIt.getDni().equals(idCliente)).
                 findFirst().
                 orElseThrow(() -> new RuntimeException("No se ha encontrado el cliente"));
 
@@ -36,79 +45,43 @@ public class ServicioCuentaImpl implements ServicioCuenta {
     }
 
     @Override
-    public void darAltaCuenta(Long idCliente, Cuenta cuenta) {
-        Cliente cliente = clientes.stream()
-                .filter(clienteIt -> clienteIt.getId().equals(idCliente)).
-                findFirst().
-                orElseThrow(() -> new RuntimeException("No se ha encontrado el cliente"));
+    public void darAltaCuenta(Cuenta cuenta) {
+        Sucursal sucursal = servicioSucursal.obtenerSucursalPorId(cuenta.getSucursal().getId());
+        cuenta.setSucursal(sucursal);
 
         String numCuenta = Integer.toString(rnd.nextInt(20));
         cuenta.setNumCuenta(numCuenta);
 
-        cliente.getCuentas().add(cuenta);
+        cuentas.add(cuenta);
     }
 
     @Override
-    public void modificarCuenta(Long idCliente, String numCuenta, Cuenta cuenta) {
-        Cliente cliente = clienteDBContext.clientes.stream().
-                filter(clienteIt -> clienteIt.getId().equals(idCliente))
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("No se ha encontrado el cliente"));
-
-        List<Cuenta> cuentasCliente = cliente.getCuentas();
-
-        if (cuentasCliente.isEmpty()) {
-            throw new RuntimeException("No hay cuentas asociadas al cliente");
-        }
-
-        Cuenta cuentaToModify = cuentasCliente.stream()
-                .filter(cuentaIt -> cuentaIt.getNumCuenta().equals(numCuenta))
+    public void modificarCuenta(String numCuenta, Cuenta cuenta) {
+        Cuenta cuentaToModify = cuentas.stream()
+                .filter(c -> c.getNumCuenta().equals(numCuenta))
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("No hay cuenta con ese número asociada al cliente"));
 
+        Sucursal sucursal = servicioSucursal.obtenerSucursalPorId(cuenta.getSucursal().getId());
+
+        cuentaToModify.setNumCuenta(cuenta.getNumCuenta());
+        cuentaToModify.setSucursal(cuenta.getSucursal());
         cuentaToModify.setBalance(cuenta.getBalance());
         cuentaToModify.setSucursal(cuenta.getSucursal());
     }
 
     @Override
-    public void eliminarCuenta(Long idCliente, String numCuenta) {
-        Cliente cliente = clienteDBContext.clientes.stream().
-                filter(clienteIt -> clienteIt.getId().equals(idCliente))
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("No se ha encontrado el cliente"));
-
-        List<Cuenta> cuentasCliente = cliente.getCuentas();
-
-        if (cuentasCliente.isEmpty()) {
-            throw new RuntimeException("No hay cuentas asociadas al cliente");
-        }
-
-        Cuenta cuentaToRemove = cuentasCliente.stream()
-                .filter(cuenta -> cuenta.getNumCuenta().equals(numCuenta))
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("No hay cuenta con ese número asociada al cliente"));
-
-        cuentasCliente.remove(cuentaToRemove);
+    public void eliminarCuenta(String numCuenta) {
+        cuentas.removeIf(c -> c.getNumCuenta().equals(numCuenta));
     }
 
     @Override
-    public OutCuentaDTO getDetalles(Long idCliente, String numCuenta) {
-        Cliente cliente = clienteDBContext.clientes.stream().
-                filter(clienteIt -> clienteIt.getId().equals(idCliente))
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("No se ha encontrado el cliente"));
-
-        List<Cuenta> cuentasCliente = cliente.getCuentas();
-
-        if (cuentasCliente.isEmpty()) {
-            throw new RuntimeException("No hay cuentas asociadas al cliente");
-        }
-
-        Cuenta cuenta = cuentasCliente.stream()
+    public Cuenta getDetalles(String numCuenta) {
+        Cuenta cuenta = cuentas.stream()
                 .filter(cuentaIt -> cuentaIt.getNumCuenta().equals(numCuenta))
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("No hay cuenta con ese número asociada al cliente"));
 
-        return new OutCuentaDTO(cuenta.getNumCuenta(), cuenta.getBalance());
+        return cuenta;
     }
 }
