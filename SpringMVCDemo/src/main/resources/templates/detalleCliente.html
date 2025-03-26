@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Detalle de Cliente</title>
+</head>
+<body>
+
+<h1>Detalle de Cliente <span th:text="${cliente.dni}">DNI</span></h1>
+<p><strong>Nombre:</strong> <span th:text="${cliente.nombre}">Nombre</span></p>
+<p><strong>Dirección postal:</strong> <span th:text="${cliente.direccionPostal}">Dirección postal</span></p>
+<p><strong>Email:</strong> <span th:text="${cliente.email}">Email</span></p>
+<p><strong>Teléfono:</strong> <span th:text="${cliente.telefono}">Teléfono</span></p>
+<p><strong>Sucursal principal:</strong> <span th:text="${cliente.sucursalPrincipal.nombre}">Sucursal principal</span></p>
+
+<br/>
+
+<form th:action="@{'/clientes/editar/' + ${cliente.dni}}" method="get">
+    <button type="submit">Modificar</button>
+</form>
+
+<br/>
+<a href="/clientes">← Volver al listado</a>
+</body>
+</html>

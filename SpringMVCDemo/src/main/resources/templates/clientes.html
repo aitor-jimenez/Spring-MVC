@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Listado de Clientes</title>
+</head>
+<body>
+<h1>Listado de Clientes</h1>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>DNI</th>
+        <th>Nombre</th>
+        <th>Dirección postal</th>
+        <th>Email</th>
+        <th>Teléfono</th>
+        <th>Sucursal principal</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="cliente : ${clientes}">
+        <td th:text="${cliente.dni}">DNI</td>
+        <td th:text="${cliente.nombre}">Nombre</td>
+        <td th:text="${cliente.direccionPostal}">Dirección postal</td>
+        <td th:text="${cliente.email}">Email</td>
+        <td th:text="${cliente.telefono}">Teléfono</td>
+        <td th:text="${cliente.sucursalPrincipal.nombre}">Sucursal principal</td>
+        <td>
+            <a th:href="@{'/clientes/' + ${cliente.dni}}">Ver detalle</a> |
+            <a th:href="@{'/clientes/borrar/' + ${cliente.dni}}">Borrar</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<!-- Formulario de creación -->
+<h2>Crear nuevo cliente</h2>
+<form th:action="@{/clientes}" method="post">
+    <label>DNI:</label>
+    <input type="text" name="dni"/><br/>
+    <label>Nombre:</label>
+    <input type="text" name="nombre"/><br/>
+    <label>Dirección postal:</label>
+    <input type="text" name="direccionPostal"/><br/>
+    <label>Email:</label>
+    <input type="text" name="email"/><br/>
+    <label>Teléfono:</label>
+    <input type="text" name="telefono"/><br/>
+    <label>Sucursal principal:</label>
+    <select name="sucursalPrincipal.id" id="sucursalPrincipal">
+        <option th:each="sucursal : ${sucursales}" th:value="${sucursal.id}" th:text="${sucursal.nombre}"></option>
+    </select>
+    <button type="submit">Crear</button>
+</form>
+</body>
+</html>
