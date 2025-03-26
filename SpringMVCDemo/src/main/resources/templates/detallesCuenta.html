@@ -1,15 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Detalles cuenta</title>
 </head>
 <body>
 <h1>Detalles de su cuenta</h1>
-<h2>Usuario con id <span th:text="${cuenta.userId}">id del usuario</span></h2>
-<p><span style="font-weight: 500">Número de cuenta:</span> <span th:text="${cuenta.numCuenta}">número de cuenta</span>
+<h2>Usuario con id <span th:text="${detallesCuenta.userId}">id del usuario</span></h2>
+<p><span style="font-weight: 500">Número de cuenta:</span> <span
+        th:text="${detallesCuenta.numCuenta}">número de cuenta</span>
 </p>
-<p><span style="font-weight: 500">Balance:</span> <span th:text="${cuenta.balance}">balance de cuenta</span></p>
+<br/>
+
+<p><span style="font-weight: 500">Balance:</span> <span th:text="${detallesCuenta.balance}">balance de cuenta</span></p>
+
+<br/>
+
+<form th:action="@{'/cuentas/' + ${detallesCuenta.numCuenta} + '/edit'}" method="get">
+    <button type="submit">Modificar</button>
+</form>
 
 <br/>
 <a href="/cuentas">Volver al listado de cuentas</a>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar cuenta</title>
+</head>
+<body>
+<h1>Editar cuenta</h1>
+
+<form th:action="@{'/cuentas/' + ${cuenta.numCuenta}}" method="post">
+    <label>Número de cuenta:</label>
+    <input type="text" name="numCuenta" th:value="${cuenta.numCuenta}" readonly/><br/>
+    <label>Balance de cuenta:</label>
+    <input type="text" name="balance" th:value="${cuenta.balance}"/><br/>
+    <label>Sucursal:</label>
+    <select name="sucursal.id" id="sucursal">
+        <option th:each="sucursal : ${sucursales}" th:value="${sucursal.id}" th:text="${sucursal.nombre}"></option>
+    </select>
+    <button type="submit">Guardar cambios</button>
+</form>
+
+<br/>
+<a th:href="@{/clientes}">← Cancelar y volver</a>
+</body>
+</html>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"/>
     <title>Cuentas</title>
 </head>
 <body>
@@ -12,17 +12,26 @@
         <th>Id</th>
         <th>Saldo</th>
     </tr>
-    <tr th:each="cuenta : ${cuentas}">
+    <tr th:each="cuenta : ${listaCuentas}">
         <td th:text="${cuenta.numCuenta}">id de cuenta</td>
-        <td th:text="${cuenta.saldo}">saldo de cuenta</td>
-        <td><a th:href="@{'/cuenta/' + ${cuenta.userId} + '/' + ${cuenta.numCuenta}">Ver detalles</a></td>
-        <td><a th:href="@{'/cuenta/' + ${cuenta.userId} + '/' + ${cuenta.numCuenta} + '/borrar'">Borrar</a></td>
+        <td th:text="${cuenta.balance}">saldo de cuenta</td>
+        <td><a th:href="@{'/cuentas/' + ${cuenta.numCuenta}}">Ver detalles</a></td>
+        <td><a th:href="@{'/cuentas/' + ${cuenta.numCuenta} + '/delete'}">Borrar</a></td>
     </tr>
+</table>
 <h2>Crear cuenta</h2>
 <form th:action="@{/cuentas}" method="post">
-    <label for="saldo">Saldo:</label>
-    <input type="number" id="saldo" name="saldo" required>
+    <label for="balance">Usuario:</label>
+    <select name="userId" id="userId">
+        <option th:each="cliente : ${clientes}" th:value="${cliente.dni}" th:text="${cliente.dni}"></option>
+    </select>
+    <label for="balance">Saldo:</label>
+    <input type="number" id="balance" name="balance" required>
     <br>
+    <label>Sucursal principal:</label>
+    <select name="sucursal.id" id="sucursal">
+        <option th:each="sucursal : ${sucursales}" th:value="${sucursal.id}" th:text="${sucursal.nombre}"></option>
+    </select>
     <button type="submit">Crear</button>
 </form>
 </body>
