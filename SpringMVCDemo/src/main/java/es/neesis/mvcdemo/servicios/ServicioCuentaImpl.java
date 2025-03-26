@@ -7,14 +7,17 @@ import es.neesis.mvcdemo.modelos.Cuenta;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class ServicioCuentaImpl implements ServicioCuenta {
 
     private ClienteDBContext clienteDBContext;
+    private Random rnd;
 
     public ServicioCuentaImpl(ClienteDBContext clienteDBContext) {
         this.clienteDBContext = clienteDBContext;
+        rnd = new Random();
     }
 
     @Override
@@ -38,6 +41,9 @@ public class ServicioCuentaImpl implements ServicioCuenta {
                 .filter(clienteIt -> clienteIt.getId().equals(idCliente)).
                 findFirst().
                 orElseThrow(() -> new RuntimeException("No se ha encontrado el cliente"));
+
+        String numCuenta = Integer.toString(rnd.nextInt(20));
+        cuenta.setNumCuenta(numCuenta);
 
         cliente.getCuentas().add(cuenta);
     }

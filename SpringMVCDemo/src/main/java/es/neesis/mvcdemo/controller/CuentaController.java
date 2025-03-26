@@ -60,7 +60,7 @@ public class CuentaController {
         return "redirect:/cuentas/" + idCliente;
     }
 
-    @DeleteMapping("/{idCliente}/{numCuenta}")
+    @GetMapping("/{idCliente}/{numCuenta}/delete")
     public String eliminarCuenta(@PathVariable Long idCliente, @PathVariable String numCuenta, Model model) {
         try {
             servicioCuenta.eliminarCuenta(idCliente, numCuenta);
